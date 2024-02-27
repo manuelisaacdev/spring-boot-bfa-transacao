@@ -1,0 +1,180 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 16.1
+-- Dumped by pg_dump version 16.1
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: depositos; Type: TABLE; Schema: public; Owner: bfatransacao
+--
+
+CREATE TABLE public.depositos (
+    id uuid NOT NULL,
+    data_transacao timestamp(6) without time zone NOT NULL,
+    montante double precision NOT NULL,
+    numero_conta character varying(255) NOT NULL,
+    numero_ordem character varying(255),
+    status character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.depositos OWNER TO bfatransacao;
+
+--
+-- Name: levantamentos; Type: TABLE; Schema: public; Owner: bfatransacao
+--
+
+CREATE TABLE public.levantamentos (
+    id uuid NOT NULL,
+    data_transacao timestamp(6) without time zone NOT NULL,
+    montante double precision NOT NULL,
+    numero_conta character varying(255) NOT NULL,
+    numero_ordem character varying(255),
+    status character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.levantamentos OWNER TO bfatransacao;
+
+--
+-- Name: transferencias; Type: TABLE; Schema: public; Owner: bfatransacao
+--
+
+CREATE TABLE public.transferencias (
+    id uuid NOT NULL,
+    data_transacao timestamp(6) without time zone NOT NULL,
+    iban_conta_destino character varying(255) NOT NULL,
+    iban_conta_origem character varying(255) NOT NULL,
+    montante double precision NOT NULL,
+    numero_ordem character varying(255),
+    status character varying(255) NOT NULL,
+    tipo_transferencia character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.transferencias OWNER TO bfatransacao;
+
+--
+-- Data for Name: depositos; Type: TABLE DATA; Schema: public; Owner: bfatransacao
+--
+
+COPY public.depositos (id, data_transacao, montante, numero_conta, numero_ordem, status) FROM stdin;
+188314c5-00b8-4db4-9479-789c4b6f8c96	2024-02-24 16:39:36.124404	100	8175620309964053	000400000728758934981586	Conluido
+\.
+
+
+--
+-- Data for Name: levantamentos; Type: TABLE DATA; Schema: public; Owner: bfatransacao
+--
+
+COPY public.levantamentos (id, data_transacao, montante, numero_conta, numero_ordem, status) FROM stdin;
+\.
+
+
+--
+-- Data for Name: transferencias; Type: TABLE DATA; Schema: public; Owner: bfatransacao
+--
+
+COPY public.transferencias (id, data_transacao, iban_conta_destino, iban_conta_origem, montante, numero_ordem, status, tipo_transferencia) FROM stdin;
+7e1afd19-205e-448b-82e3-4761e0b7dcb4	2024-02-27 03:40:46.016456	AO02000400008175620309964053	AO02000600000090175075753453	100	000600009268682411236887	Negado	Interbancária
+0ad62f10-0731-4807-b811-ddbb35ee5c9c	2024-02-27 03:46:11.664629	AO02000400008175620309964053	AO02000600000090175075753453	140	000600009058489030748341	Conluido	Interbancária
+71635b4d-3953-46ef-8f94-e244cb8b3713	2024-02-27 04:07:58.977826	AO02000400008175620309964053	AO02000600000090175075753453	60	000600008603061711875613	Processo	Interbancária
+0b6934c8-24d0-45dc-8a27-537a22188996	2024-02-27 04:12:08.745632	AO02000400008175620309964053	AO02000600000090175075753453	100	000600001132243256291094	Processo	Interbancária
+402892a1-0332-4552-a204-13b9f638be4b	2024-02-27 04:14:00.677165	AO02000400008175620309964053	AO02000600000090175075753453	50	000600009077187827855058	Processo	Interbancária
+daa594a5-31bf-46f7-8b99-65b896daa8a6	2024-02-27 04:21:08.338243	AO02000600000090175075753453	AO02000400008175620309964053	100	000400009493227897462169	Processo	Interbancária
+bb4fbada-6dd0-4c6b-878e-7cb29f27f664	2024-02-27 04:25:42.581713	AO02000600000090175075753453	AO02000400008175620309964053	100	000400009624196668196955	Negado	Interbancária
+ecced466-acde-4354-9858-1740a59768ba	2024-02-27 04:29:13.993218	AO02000600000090175075753453	AO02000400008175620309964053	100	000400003731102328526240	Conluido	Interbancária
+a08238ba-d1a6-407d-bbe0-8691453c6f9b	2024-02-27 04:29:44.558856	AO02000400008175620309964053	AO02000600000090175075753453	100	000600008707908805101827	Processo	Interbancária
+9554a3bb-9905-4c9e-a83d-6b878e1b171d	2024-02-27 04:30:15.146306	AO02000600000090175075753453	AO02000400008175620309964053	60	000400007257575548734943	Conluido	Interbancária
+\.
+
+
+--
+-- Name: depositos depositos_pkey; Type: CONSTRAINT; Schema: public; Owner: bfatransacao
+--
+
+ALTER TABLE ONLY public.depositos
+    ADD CONSTRAINT depositos_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: levantamentos levantamentos_pkey; Type: CONSTRAINT; Schema: public; Owner: bfatransacao
+--
+
+ALTER TABLE ONLY public.levantamentos
+    ADD CONSTRAINT levantamentos_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: transferencias transferencias_pkey; Type: CONSTRAINT; Schema: public; Owner: bfatransacao
+--
+
+ALTER TABLE ONLY public.transferencias
+    ADD CONSTRAINT transferencias_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: depositos uk_depositos_numero_ordem; Type: CONSTRAINT; Schema: public; Owner: bfatransacao
+--
+
+ALTER TABLE ONLY public.depositos
+    ADD CONSTRAINT uk_depositos_numero_ordem UNIQUE (numero_ordem);
+
+
+--
+-- Name: levantamentos uk_levantamentos_numero_ordem; Type: CONSTRAINT; Schema: public; Owner: bfatransacao
+--
+
+ALTER TABLE ONLY public.levantamentos
+    ADD CONSTRAINT uk_levantamentos_numero_ordem UNIQUE (numero_ordem);
+
+
+--
+-- Name: transferencias uk_transferencias_numero_ordem; Type: CONSTRAINT; Schema: public; Owner: bfatransacao
+--
+
+ALTER TABLE ONLY public.transferencias
+    ADD CONSTRAINT uk_transferencias_numero_ordem UNIQUE (numero_ordem);
+
+
+--
+-- Name: idx_depositos_numero_ordem; Type: INDEX; Schema: public; Owner: bfatransacao
+--
+
+CREATE INDEX idx_depositos_numero_ordem ON public.depositos USING btree (numero_ordem);
+
+
+--
+-- Name: idx_levantamentos_numero_ordem; Type: INDEX; Schema: public; Owner: bfatransacao
+--
+
+CREATE INDEX idx_levantamentos_numero_ordem ON public.levantamentos USING btree (numero_ordem);
+
+
+--
+-- Name: idx_transferencias_numero_ordem; Type: INDEX; Schema: public; Owner: bfatransacao
+--
+
+CREATE INDEX idx_transferencias_numero_ordem ON public.transferencias USING btree (numero_ordem);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
